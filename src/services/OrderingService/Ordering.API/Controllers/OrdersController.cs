@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Ordering.Application.UseCases.CreateOrder;
+using Ordering.Application.UseCases.GetOrders;
 
 namespace Ordering.API.Controllers;
 
@@ -16,9 +17,9 @@ public class OrdersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(Guid customerId)
     {
-        var result = await _mediator.Send(new GetOrdersQuery());
+        var result = await _mediator.Send(new GetOrdersQuery(customerId));
         return Ok(result);
     }
 
