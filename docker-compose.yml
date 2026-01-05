@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  api-gateway:
+    build:
+      context: ./src/services/ApiGateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "5100:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - catalog-api
+      - ordering-api
+
+  catalog-api:
+    build:
+      context: ./src/services/CatalogService
+      dockerfile: Catalog.API/Dockerfile
+    container_name: catalog-api
+    ports:
+      - "5001:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  ordering-api:
+    build:
+      context: ./src/services/OrderingService
+      dockerfile: Ordering.API/Dockerfile
+    container_name: ordering-api
+    ports:
+      - "5002:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - catalog-api

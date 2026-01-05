@@ -23,6 +23,7 @@ public class GetOrdersHandler
         return orders.Select(o =>
             new OrderDto(
                 o.Id,
+                o.CustomerId,
                 o.CreatedAt,
                 o.TotalAmount
             ));

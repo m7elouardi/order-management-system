@@ -1,26 +1,14 @@
-using Ordering.Application.UseCases.GetOrders;
-using Ordering.Infrastructure.DependencyInjection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Register MediatR and handlers
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(
-        typeof(GetOrdersQuery).Assembly
-    )
-);
-
-builder.Services.AddInfrastructure(
-    builder.Configuration.GetConnectionString("DefaultConnection")!
-);
-
-
+// Add Reverse Proxy
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,6 +39,9 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+// Map Reverse Proxy
+app.MapReverseProxy();
 
 app.Run();
 

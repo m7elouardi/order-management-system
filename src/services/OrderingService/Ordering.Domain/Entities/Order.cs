@@ -4,6 +4,7 @@ public class Order
 {
     public Guid Id { get; private set; }
     public DateTime CreatedAt { get; private set; }
+    public Guid CustomerId { get; private set; }
     public decimal TotalAmount { get; private set; }
 
     private readonly List<OrderItem> _items = new();
