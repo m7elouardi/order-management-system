@@ -2,6 +2,7 @@ using MediatR;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Interfaces;
 using Ordering.Application.Interfaces;
+using EventBus.Messages.Events;
 
 namespace Ordering.Application.UseCases.CreateOrder;
 
@@ -10,13 +11,16 @@ public class CreateOrderHandler
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ICatalogService _catalogService;
+    private readonly IEventBus _eventBus;
 
     public CreateOrderHandler(
         IOrderRepository orderRepository,
-        ICatalogService catalogService)
+        ICatalogService catalogService,
+        IEventBus eventBus)
     {
         _orderRepository = orderRepository;
         _catalogService = catalogService;
+        _eventBus = eventBus;
     }
 
     public async Task<Guid> Handle(
@@ -38,15 +42,20 @@ public class CreateOrderHandler
 
             items.Add(new OrderItem(
                 product.Id,
+                product.Name,
                 product.Price,
                 item.Quantity
             ));
         }
 
         // ✅ Domain decides CreatedAt & TotalAmount
-        var order = new Order(items);
+        var order = new Order(
+            command.CustomerId,
+            items);
 
         await _orderRepository.AddAsync(order);
+        _eventBus.Publish(new OrderCreatedIntegrationEvent(order.Id, order.TotalAmount));
+
         return order.Id;
     }
 }

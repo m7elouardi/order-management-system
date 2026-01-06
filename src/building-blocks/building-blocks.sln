@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{351B70FB-5EA3-A51B-FFF4-A6EF104154EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.Messages", "EventBus\EventBus.Messages\EventBus.Messages.csproj", "{68FAB3EE-E3A3-8093-140D-D9E6185D2EBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68FAB3EE-E3A3-8093-140D-D9E6185D2EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68FAB3EE-E3A3-8093-140D-D9E6185D2EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68FAB3EE-E3A3-8093-140D-D9E6185D2EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68FAB3EE-E3A3-8093-140D-D9E6185D2EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{68FAB3EE-E3A3-8093-140D-D9E6185D2EBE} = {351B70FB-5EA3-A51B-FFF4-A6EF104154EB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {764661D2-E463-41C6-9709-A201657C01DC}
+	EndGlobalSection
+EndGlobal

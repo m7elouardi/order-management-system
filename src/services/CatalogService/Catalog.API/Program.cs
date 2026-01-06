@@ -1,5 +1,6 @@
 using Catalog.Application.UseCases.GetProducts;
 using Catalog.Infrastructure.DependencyInjection;
+using Catalog.Infrastructure.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 // Application
 
@@ -26,6 +26,10 @@ builder.Services.AddInfrastructure(
 
 
 var app = builder.Build();
+
+var consumer =
+    app.Services.GetRequiredService<OrderCreatedConsumer>();
+await consumer.StartAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -55,6 +59,7 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
 
 app.MapControllers();
 app.Run();
